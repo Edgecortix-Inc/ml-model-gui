@@ -1,0 +1,14 @@
+.env
+__pycache__
+.DS_Store
+.idea/
+.vscode/
+*.ipynb_checkpoints
+.mypy_cache/
+.pytest_cache/
+.cache/
+*.coverage
+htmlcov/
+.tox/
+.envrc
+.env.*
