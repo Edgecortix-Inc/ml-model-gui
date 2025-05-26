@@ -1,4 +1,3 @@
-import argparse
 import json
 from bson import ObjectId
 from pymongo import MongoClient
@@ -55,42 +54,3 @@ def getModelsInfo(report, filter):
             finalReport.append(element)
 
     return finalReport
-
-def main(args):
-    report = get_latest_document_by(args.filter_by)
-    
-    print(getModelsInfo(report, args.model_passing_status))
-    return report
-
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--model_passing_status",
-        default="",
-        required=True,
-        choices=["Y", "N"],
-        type=str,
-        help="Get Successful (Y) or Not Succesful (N) models",
-    )
-    parser.add_argument(
-        "--filter_by",
-        default="metadata.upload_data",
-        required=False,
-        choices=[
-            "metadata.upload_data",
-            "jenkins_params.MERA_INSTALL_VERSION", 
-            "jenkins_params.EC_MODEL_BRANCHMARKING_BRANCH", 
-            "jenkins_params.DEVICE",
-            "jenkins_params.MERA_DEMOS_BRANCH",
-            "jenkins_params.HOST_ARCH",
-            ],
-        type=str,
-        help="Filter by information you want in database. Note: currently, it will return the latest added document based on the filter you choose"
-    )
-
-    return parser.parse_args()
-
-if __name__ == "__main__":
-    import sys
-
-    sys.exit(main(get_args()))

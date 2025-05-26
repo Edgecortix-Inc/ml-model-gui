@@ -5,6 +5,23 @@ from streamlit.logger import get_logger
 import pandas as pd
 
 LOGGER = get_logger(__name__)
+
+def getQueryFilter():
+    return [
+        "metadata.upload_data",
+        "jenkins_params.MERA_INSTALL_VERSION", 
+        "jenkins_params.EC_MODEL_BRANCHMARKING_BRANCH", 
+        "jenkins_params.DEVICE",
+        "jenkins_params.MERA_DEMOS_BRANCH",
+        "jenkins_params.HOST_ARCH",
+    ]
+
+def returnDesiredStatus():
+    return [
+        "Y",
+        "N",
+    ]
+
 def getFlowList():
     return ["deploy", "inference", "latency", "eval"]
 
@@ -35,7 +52,7 @@ def get_targets_prec_list():
     ]
 
 def get_mera_versions():
-    return ['']
+    return ['2.3.0']
 
 def get_architectures():
     return ['x86', 'aarch64']
@@ -52,7 +69,7 @@ def createHeader():
         "This page provides a summary of the ML model pipeline, including the status of each model for different functions (deploy, inference, latency, eval)."
     )
     streamlit.write(
-        "The table below shows the status of each model for different functions (deploy, inference, latency, eval)."
+        "The table below shows the level of support of each model"
     )
     streamlit.write(
         "You can filter the models by flow, target, Mera version, and architecture using the dropdowns below."
@@ -60,15 +77,19 @@ def createHeader():
 
 def createContainerSectionDropdown():
     with streamlit.container(height=100):
-            col1, col2, col3, col4 = streamlit.columns(4)
-            with col1:
+            flow, targets, meraVersions, arch, status, queryFilter = streamlit.columns(5)
+            with flow:
                 streamlit.selectbox("List of Flows", getFlowList())
-            with col2:
+            with targets:
                 streamlit.selectbox("List of Targets", get_targets_prec_list())
-            with col3:
+            with meraVersions:
                 streamlit.selectbox("List of Mera Versions", get_mera_versions())
-            with col4:
+            with arch:
                 streamlit.selectbox("List of Architectures", get_architectures())
+            with status:
+                streamlit.selectbox("List of Status", returnDesiredStatus())
+            with queryFilter:
+                streamlit.selectbox("List of Query Filters", getQueryFilter())
 
 def getReport(filter_by, passing_status):
     report = reportGenerator.get_latest_document_by(filter_by)
