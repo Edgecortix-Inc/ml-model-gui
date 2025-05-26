@@ -76,20 +76,23 @@ def createHeader():
     )
 
 def createContainerSectionDropdown():
+    flowSelected, targetsSelected, meraVersionsSelected, archSelected, statusSelected, queryFilterSelected = '', '', '', '', '', ''
     with streamlit.container(height=100):
-            flow, targets, meraVersions, arch, status, queryFilter = streamlit.columns(5)
-            with flow:
-                streamlit.selectbox("List of Flows", getFlowList())
-            with targets:
-                streamlit.selectbox("List of Targets", get_targets_prec_list())
-            with meraVersions:
-                streamlit.selectbox("List of Mera Versions", get_mera_versions())
-            with arch:
-                streamlit.selectbox("List of Architectures", get_architectures())
-            with status:
-                streamlit.selectbox("List of Status", returnDesiredStatus())
-            with queryFilter:
-                streamlit.selectbox("List of Query Filters", getQueryFilter())
+        flow, targets, meraVersions, arch, status, queryFilter = streamlit.columns(6)
+        with flow:
+            flowSelected = streamlit.selectbox("List of Flows", getFlowList())
+        with targets:
+            targetsSelected = streamlit.selectbox("List of Targets", get_targets_prec_list())
+        with meraVersions:
+            meraVersionsSelected = streamlit.selectbox("List of Mera Versions", get_mera_versions())
+        with arch:
+            archSelected = streamlit.selectbox("List of Architectures", get_architectures())
+        with status:
+            statusSelected = streamlit.selectbox("List of Status", returnDesiredStatus())
+        with queryFilter:
+            queryFilterSelected = streamlit.selectbox("List of Query Filters", getQueryFilter())
+
+    return [flowSelected, targetsSelected, meraVersionsSelected, archSelected, statusSelected, queryFilterSelected]
 
 def getReport(filter_by, passing_status):
     report = reportGenerator.get_latest_document_by(filter_by)
@@ -106,33 +109,12 @@ def getReport(filter_by, passing_status):
 def run_web_frontend(filter_by='metadata.upload_data', passing_status='Y'):
     # Create Dropdown choices for filtering
     createHeader()
+
+    # This will be used to create the queries for the report
+    selections = createContainerSectionDropdown
     createContainerSectionDropdown()
 
     getReport(filter_by, passing_status)
 
 run_web_frontend()
 
-
-#with streamlit.form("test_summary_form"):
-#    streamlit.write("### Test Summary")
-#    streamlit.write(
-#        "This is a summary of the test results for the models deployed in the pipeline."
-#    )
-#    streamlit.write(
-#        "The table below shows the status of each model for different functions (deploy, inference, latency, eval)."
-#    )
-#
-#    # Get the latest report
-#    report = reportGenerator.get_latest_document_by("created_at")
-#
-#    # Get the models info
-#    finalReport = reportGenerator.getModelsInfo(report, "Y")
-#
-#    # Convert to DataFrame
-#    df = pd.DataFrame(finalReport)
-#
-#    # Style the DataFrame
-#    styled_df = style_dataframe(df)
-#
-#    # Display the styled DataFrame
-#    streamlit.dataframe(styled_df)
