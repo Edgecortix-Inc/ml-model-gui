@@ -113,8 +113,11 @@ def run_web_frontend(filter_by='metadata.upload_data', passing_status='Y'):
     # This will be used to create the queries for the report
     selections = createContainerSectionDropdown
     createContainerSectionDropdown()
+    
 
-    getReport(filter_by, passing_status)
+    # Add a submit button to trigger report generation
+    if streamlit.button("Submit"):
+        getReport(filter_by, passing_status)
 
 run_web_frontend()
 
