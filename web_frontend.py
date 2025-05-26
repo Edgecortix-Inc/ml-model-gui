@@ -1,5 +1,5 @@
 import streamlit as streamlit
-import reportGenerator as reportGenerator
+import query as query
 import streamlit as streamlit
 from streamlit.logger import get_logger
 import pandas as pd
@@ -95,8 +95,8 @@ def createContainerSectionDropdown():
     return [flowSelected, targetsSelected, meraVersionsSelected, archSelected, statusSelected, queryFilterSelected]
 
 def getReport(filter_by, passing_status):
-    report = reportGenerator.get_latest_document_by(filter_by)
-    reportInfo = reportGenerator.getModelsInfo(report, passing_status)
+    report = query.get_latest_document_by(filter_by)
+    reportInfo = query.getModelsInfo(report, passing_status)
     dataframe = pd.DataFrame(reportInfo)
 
     streamlit.dataframe(

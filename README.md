@@ -15,14 +15,4 @@ export MONGO_DB_LOCAL_CLIENT_ENDPOINT="<endpoint>"
 pip install python-dotenv
 ```
 
-3. This is a CLI. In order to use it, you can call `filterReportBy.py` passing some arguments along
-
-| CLI arg option       | Possible Values           |       Required        |  Default Value                    |
-|----------------------|---------------------------|-----------------------|-----------------------------------|
-|--model_passing       |    ["Y", "N" ]                                    |      Yes     |                    |
-|--filter_by           | ["metadata.upload_data"]                          |      No      |metadata.upload_data|
-|--filter_by           | ["jenkins_params.MERA_INSTALL_VERSION"]           |      No      |metadata.upload_data|
-|--filter_by           | ["jenkins_params.EC_MODEL_BRANCHMARKING_BRANCH"]  |      No      |metadata.upload_data|
-|--filter_by           | ["jenkins_params.DEVICE"]                         |      No      |metadata.upload_data|
-|--filter_by           | ["jenkins_params.MERA_DEMOS_BRANCH"]              |      No      |metadata.upload_data|
-|--filter_by           | ["jenkins_params.HOST_ARCH"]                      |      No      |metadata.upload_data|
+3. This is a GUI project. In order to use it, please select which filters you want to query on the UI
